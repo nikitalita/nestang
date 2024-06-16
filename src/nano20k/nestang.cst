@@ -106,19 +106,24 @@ IO_PORT "ds_mosi2" IO_TYPE=LVCMOS33 PULL_MODE=NONE DRIVE=8 BANK_VCCIO=3.3;
 IO_LOC "ds_cs2" 72;
 IO_PORT "ds_cs2" IO_TYPE=LVCMOS33 PULL_MODE=NONE DRIVE=8 BANK_VCCIO=3.3;
 
+// SNAC enable
+IO_LOC "snac_en" 79;
+// pulldown to enable SNAC
+IO_PORT "snac_en" PULL_MODE=DOWN IO_TYPE=LVCMOS33;
+
 // SNES controller 1
-IO_LOC "joy1_strb" 28;
+IO_LOC "joy1_strb" 74;
 IO_PORT "joy1_strb" PULL_MODE=NONE IO_TYPE=LVCMOS33;
-IO_LOC "joy1_clk" 27;
+IO_LOC "joy1_clk" 73;
 IO_PORT "joy1_clk" PULL_MODE=NONE IO_TYPE=LVCMOS33;
-IO_LOC "joy1_data" 25;
+IO_LOC "joy1_data" 75;
 IO_PORT "joy1_data" PULL_MODE=UP IO_TYPE=LVCMOS33;
 
 // SNES controller 2
-IO_LOC "joy2_strb" 29;
-IO_PORT "joy2_strb" PULL_MODE=NONE IO_TYPE=LVCMOS33;
-IO_LOC "joy2_clk" 26;
+// IO_LOC "joy2_strb" 29;
+// IO_PORT "joy2_strb" PULL_MODE=NONE IO_TYPE=LVCMOS33;
+IO_LOC "joy2_clk" 86;
 IO_PORT "joy2_clk" PULL_MODE=NONE IO_TYPE=LVCMOS33;
-IO_LOC "joy2_data" 30;
+IO_LOC "joy2_data" 76;
 IO_PORT "joy2_data" PULL_MODE=UP IO_TYPE=LVCMOS33;
 

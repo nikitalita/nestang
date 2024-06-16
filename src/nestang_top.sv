@@ -4,6 +4,7 @@
 //
 
 // `timescale 1ns / 100ps
+`define CONTROLLER_SNAC
 
 import configPackage::*;
 
@@ -49,12 +50,18 @@ module nestang_top (
     output flash_spi_wp_n,          // write protect
     output flash_spi_hold_n,        // hold operations
 
+`ifdef CONTROLLER_SNAC
+    output snac_en
+`endif
+
 `ifdef CONTROLLER_SNES
     // snes controllers
     output joy1_strb,
     output joy1_clk,
     input joy1_data,
+`ifndef CONTROLLER_SNAC
     output joy2_strb,
+`endif
     output joy2_clk,
     input joy2_data,
 `endif
@@ -483,6 +490,18 @@ controller_snes joy1_snes (
     .clk(clk), .resetn(sys_resetn), .buttons(joy1_btns),
     .joy_strb(joy1_strb), .joy_clk(joy1_clk), .joy_data(joy1_data)
 );
+
+controller_snes joy2_snes (
+    .clk(clk), .resetn(sys_resetn), .buttons(joy2_btns),
+`ifdef CONTROLLER_SNAC
+    .joy_strb(joy1_strb), 
+`else // !CONTROLLER_SNAC
+    .joy_strb(joy2_strb),
+`endif
+    .joy_clk(joy2_clk), .joy_data(joy2_data)
+);
+`endif
+
 controller_snes joy2_snes (
     .clk(clk), .resetn(sys_resetn), .buttons(joy2_btns),
     .joy_strb(joy2_strb), .joy_clk(joy2_clk), .joy_data(joy2_data)
@@ -560,4 +579,7 @@ reg [23:0] led_cnt;
 always @(posedge clk) led_cnt <= led_cnt + 1;
 //assign led = {led_cnt[23], led_cnt[22]};
 
+`ifdef CONTROLLER_SNAC
+assign snac_en = 0;
+`endif
 endmodule
